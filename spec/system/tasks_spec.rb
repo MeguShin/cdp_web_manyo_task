@@ -20,15 +20,15 @@ RSpec.describe 'タスク管理機能', type: :system do
     context '一覧画面に遷移した場合' do
       it '作成済みのタスク一覧が表示される' do
         # テストで使用するためのタスクを登録
-        # Task.create!(title: '書類作成', content: '企画書を作成する。')
-        FactoryBot.create(:task)
+        Task.create!(title: '書類作成', content: '企画書を作成する。')
+        # FactoryBot.create(:task)
         # タスク一覧画面に遷移
         visit tasks_path
         # ページ遷移直後にデバッグ
-        #binding.irb
+        # binding.irb
         # visit（遷移）したpage（この場合、タスク一覧画面）に"task_title"という文字列が、have_content（含まれていること）をexpect（確認・期待）する
-        expect(page).to have_content '書類作成'
-        # わざと間違った結果を期待値として設定
+        # expect(page).to have_content '書類作成'
+        # わざと間違った結果を期待値として設定する場合
         # expect(page).to have_content '企画の予算案を作成する。'
       end
     end
