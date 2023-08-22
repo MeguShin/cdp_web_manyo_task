@@ -20,8 +20,8 @@ RSpec.describe 'タスク管理機能', type: :system do
     context '一覧画面に遷移した場合' do
       it '作成済みのタスク一覧が表示される' do
         # テストで使用するためのタスクを登録
-        Task.create!(title: '書類作成', content: '企画書を作成する。')
-        # FactoryBot.create(:task)
+        # Task.create!(title: '書類作成', content: '企画書を作成する。')
+        FactoryBot.create(:task)
         # タスク一覧画面に遷移
         visit tasks_path
         # ページ遷移直後にデバッグ
