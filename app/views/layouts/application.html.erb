@@ -9,11 +9,11 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body id="tasks-index">
+  <body>
     <p id="notice"><%= notice %></p>
     <ul>
-      <li><%= link_to "Tasks Index", tasks_path %></li>
-      <li><%= link_to "New Task", new_task_path %></li>
+      <li id="tasks-index"><%= link_to "Tasks Index", tasks_path %></li>
+      <li id="new-index"><%= link_to "New Task", new_task_path %></li>
     <%= yield %>
   </body>
 </html>
