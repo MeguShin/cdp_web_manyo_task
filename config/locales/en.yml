@@ -30,4 +30,12 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  tasks:
+    create:
+      created: Task was successfully created.
+    update:
+      updated: Task was successfully updated.
+    destroy:
+      destroyed: Task was successfully destroyed.
+  common:
+    confirm_destroy: Are you sure?
