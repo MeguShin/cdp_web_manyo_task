@@ -12,17 +12,16 @@
     <% end %>
   
     <div class="field">
-      <%= form.label :title %><br>
-      <%= form.text_field :title %><br>
+      <%= Task.human_attribute_name(:title) %><br>
+        <%= form.text_field :title %><br>
     </div>
   
     <div class="field">
-      <%= form.label :content %><br>
-      <%= form.text_area :content %><br>
+      <%= Task.human_attribute_name(:content) %><br>
+        <%= form.text_area :content %><br>
     </div>
-  
-    <div>
-      <%= form.submit %>
-    </div>
+
+    <%= form.submit %>
+    
   <% end %>
   
