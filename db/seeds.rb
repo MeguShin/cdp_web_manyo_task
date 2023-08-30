@@ -8,7 +8,7 @@
 50.times do |i|
     Task.create!(
         title: "タスク#{i + 1}",
-        description: "タスク#{i + 1}の説明",
+        content: "タスク#{i + 1}の説明",
         created_at: Time.current - rand(1..30).days
     )
 end
