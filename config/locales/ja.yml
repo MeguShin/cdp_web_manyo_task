@@ -1,0 +1,45 @@
+ja:
+  activerecord:
+    models:
+      task: タスク
+    attributes:
+      task:
+        title: タイトル
+        content: 内容
+        created_at: 作成日時
+  errors:
+    format: "%{attribute}%{message}"
+    messages:
+      blank: を入力してください
+  helpers:
+    submit:
+      create: 登録する
+      update: 更新する
+  common:
+    show: 詳細
+    edit: 編集
+    destroy: 削除
+    confirm_destroy: 本当に削除してもよろしいですか？
+    back: 戻る
+  layouts:
+    application:
+      Tasks Index: タスク一覧
+      New Task: タスクを登録する
+  tasks:
+    index:
+      Tasks Index: タスク一覧ページ
+    new:
+      New Task: タスク登録ページ
+    show:
+      Show Task: タスク詳細ページ
+    edit:
+      Edit Task: タスク編集ページ
+    create:
+      created: タスクを登録しました
+    update:
+      updated: タスクを更新しました
+    destroy:
+      destroyed: タスクを削除しました
+  time:
+    formats:
+      default: "%Y/%m/%d %H:%M"
