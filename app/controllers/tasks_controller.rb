@@ -3,7 +3,7 @@ class TasksController < ApplicationController
   
     def index
       @tasks = Task.filtered_tasks(params).page(params[:page]).per(10)
-      # 以下内容は、「app/models/tasks.rb」に移動
+      #以下内容は、「app/models/tasks.rb」に移動
       # case params[:order]
       #   # 「終了期限」を昇順に並び替え
       #   when 'deadline_on'

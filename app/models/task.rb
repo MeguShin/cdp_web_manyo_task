@@ -7,26 +7,30 @@ class Task < ApplicationRecord
 
     # Step3から追加（検索機能）
     scope :filtered_tasks, ->(params) {
-        # 作成日時の降順で並び替え
-        tasks = order(created_at: :desc)
-
         case params[:order]
-            # 終了期限をクリックして昇順で並び替え
+            # 「終了期限」を昇順に並び替え
             when 'deadline_on'
-                tasks = tasks.order(deadline_on: :asc)
-            # 優先度をクリックして高い順から並び替え
+              @tasks = Task.order(deadline_on: :asc).page(params[:page]).per(10)
+            # 「優先度」を降順に並び替え
             when 'priority'
-                tasks = tasks.order(priority: :desc)
+              @tasks = Task.order(priority: :desc).page(params[:page]).per(10)
+            # 上記以外
+            else
+              @tasks = Task.order(created_at: :desc).page(params[:page]).per(10)
             end
-            # タイトルが記入されている状態で検索をかけたら、タイトルに合致しているタスクのみ表示
+      
+            # "title"パラメータに値があれば、その値でタイトルでフィルタリング
             if params[:title].present?
-                tasks = tasks.title_search(params[:title])
+              #@tasks = @tasks.where("title LIKE ?", "%#{title}%")
+              @tasks = @tasks.title_search(params[:title])
             end
-            # ステータスが選択されている状態で検索をかけたら、ステータスの値に合致しているタスクのみ表示
+            
+            # "status"パラメータに値があれば、その値でフィルタリング
             if params[:status].present?
-                tasks = tasks.status_search(params[:status])
+              @tasks = @tasks.where(status: params[:status])
             end
-        tasks
+      
+        @tasks = @tasks.page(params[:page]).per(10)
     }
 
     # タイトルのあいまい検索（文字の一部で検索が可能）
