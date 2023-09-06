@@ -60,13 +60,12 @@ RSpec.describe 'タスク管理機能', type: :system do
           visit tasks_path
           # "deadline_on"リンクをクリックしてソートする
           click_link Task.human_attribute_name(:deadline_on)
-          # タスクがソートされたかどうかを確認する
-          # 最初のタスクのdeadline_onが一番大きいかどうかを確認する
+          # 最初のタスクのdeadline_onが古い順かどうかを確認する
           # tr:nth-child(2)は2行目、td:nth-child(4)は4列目を指す=>deadline_onの値する位置
           first_task_deadline = find('table tr:nth-child(2) td:nth-child(4)').text
           second_task_deadline = find('table tr:nth-child(3) td:nth-child(4)').text
-          # 3行目のdeadline_onよりも2行目のdeadline_onの方が大きいことを確認
-          expect(first_task_deadline).to be >= second_task_deadline
+          # 3行目のdeadline_onよりも2行目のdeadline_onの方が古い順であることを確認
+          expect(first_task_deadline).to be <= second_task_deadline
         end
       end
       context '「優先度」というリンクをクリックした場合' do

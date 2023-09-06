@@ -11,22 +11,21 @@ class Task < ApplicationRecord
         tasks = order(created_at: :desc)
 
         case params[:order]
-        # 終了期限をクリックして昇順で並び替え
-        when 'deadline_on'
-            tasks = tasks.order(deadline_on: :asc)
-        # 優先度をクリックして高い順から並び替え
-        when 'priority'
-            tasks = tasks.order(priority: :desc)
-        end
-        # タイトルが記入されている状態で検索をかけたら、タイトルに合致しているタスクのみ表示
-        if params[:title].present?
-            tasks = tasks.title_search(params[:title])
-        end
-        # ステータスが選択されている状態で検索をかけたら、ステータスの値に合致しているタスクのみ表示
-        if params[:status].present?
-            tasks = tasks.status_search(params[:status])
-        end
-
+            # 終了期限をクリックして昇順で並び替え
+            when 'deadline_on'
+                tasks = tasks.order(deadline_on: :asc)
+            # 優先度をクリックして高い順から並び替え
+            when 'priority'
+                tasks = tasks.order(priority: :desc)
+            end
+            # タイトルが記入されている状態で検索をかけたら、タイトルに合致しているタスクのみ表示
+            if params[:title].present?
+                tasks = tasks.title_search(params[:title])
+            end
+            # ステータスが選択されている状態で検索をかけたら、ステータスの値に合致しているタスクのみ表示
+            if params[:status].present?
+                tasks = tasks.status_search(params[:status])
+            end
         tasks
     }
 
