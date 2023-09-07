@@ -11,15 +11,30 @@
       </div>
     <% end %>
   
-    <div class="field">
+    <p><div class="field">
       <%= Task.human_attribute_name(:title) %><br>
-        <%= form.text_field :title %><br>
-    </div>
+        <%= form.text_field :title %>
+    </div></p>
   
-    <div class="field">
+    <p><div class="field">
       <%= Task.human_attribute_name(:content) %><br>
-        <%= form.text_area :content %><br>
-    </div>
+        <%= form.text_area :content %>
+    </div></p>
+
+    <p><div class="field">
+      <%= Task.human_attribute_name(:deadline_on) %><br>
+        <%= form.date_field :deadline_on %>
+    </div></p>
+
+    <p><div class="field">
+      <%= Task.human_attribute_name(:priority) %><br>
+        <%= form.select :priority, Task.priorities.keys, prompt:"" %>
+    </div></p>
+
+    <p><div class="field">
+      <%= Task.human_attribute_name(:status) %><br>
+        <%= form.select :status, Task.statuses.keys, prompt:"" %>
+    </div></p>
 
     <%= form.submit %>
     
