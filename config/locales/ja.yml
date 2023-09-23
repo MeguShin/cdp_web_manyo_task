@@ -10,10 +10,20 @@ ja:
         deadline_on:  終了期限
         priority: 優先度
         status: ステータス
+      user:
+        name: 名前
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: パスワード（確認）
+        admin: 管理者権限
   errors:
     format: "%{attribute}%{message}"
     messages:
       blank: を入力してください
+      taken: はすでに使用されています
+      invalid: が無効です
+      too_short: は6文字以上で入力してください
+      confirmation: パスワード（確認）とパスワードの入力が一致しません
   helpers:
     submit:
       create: 登録する
@@ -26,8 +36,20 @@ ja:
     back: 戻る
   layouts:
     application:
+      Users Index: ユーザ一覧
+      Add User: ユーザを登録する
       Tasks Index: タスク一覧
       New Task: タスクを登録する
+      Profile: アカウント設定
+      Logout: ログアウト
+      Sign up: アカウント登録
+      Login: ログイン
+  sessions:
+    new:
+      Log in: ログインページ
+      email: メールアドレス
+      password: パスワード
+      success: ログインしました
   tasks:
     index:
       Tasks Index: タスク一覧ページ
@@ -46,3 +68,13 @@ ja:
   time:
     formats:
       default: "%Y/%m/%d %H:%M"
+  users:
+    new:
+      Sign up: アカウント登録ページ
+      success: アカウントを登録しました
+    show:
+      Show: アカウント詳細ページ
+    edit:
+      Edit: アカウント編集ページ
+      success: アカウントが更新されました
+
