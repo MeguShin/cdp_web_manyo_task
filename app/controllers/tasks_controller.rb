@@ -1,8 +1,11 @@
 class TasksController < ApplicationController
     before_action :set_task, only: %i[ show edit update destroy ]
+    before_action :login_required
   
+    # ログインしているユーザーのタスクだけを表示する
     def index
-      @tasks = Task.filtered_tasks(params).page(params[:page]).per(10)
+      @tasks = current_user.tasks.filtered_tasks(params).page(params[:page]).per(10)
+      #@tasks = Task.filtered_tasks(params).page(params[:page]).per(10)
       #以下内容は、「app/models/tasks.rb」に移動
       # case params[:order]
       #   # 「終了期限」を昇順に並び替え
@@ -35,7 +38,11 @@ class TasksController < ApplicationController
     end
   
     def create
-      @task = Task.new(task_params)
+      # ログインしているユーザーの情報を保存することで、ユーザーとタスクを関連付ける
+      #@task = Task.new(task_params)
+      @task = current_user.tasks.build(task_params)
+
+      # "current_user.tasks.build"を使用して、ログインしているユーザーに関連付けられた新しいタスクを作成する
       if @task.save
         redirect_to tasks_path, notice: t('.created')
       else
@@ -63,13 +70,26 @@ class TasksController < ApplicationController
     end
   
     private
-  
+      # 他人のタスクにアクセスしようとした場合にメッセージを表示し、タスク一覧画面に遷移する
       def set_task
         @task = Task.find(params[:id])
+        # 該当のタスクのユーザーと現在のユーザーを比較する
+        unless @task.user == current_user
+          flash[:danger] = "アクセス権限がありません"
+          redirect_to tasks_path
+        end
       end
   
       def task_params
         params.require(:task).permit(:title, :content, :deadline_on, :priority, :status)
+      end
+
+      # ログインしていない状態でタスク画面にアクセスした場合、ログイン画面にリダイレクトする
+      def login_required
+        unless logged_in?
+          flash[:danger] = "ログインしてください"
+          redirect_to new_session_path
+        end
       end
   end
   

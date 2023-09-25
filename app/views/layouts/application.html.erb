@@ -10,11 +10,24 @@
   </head>
 
   <body>
-    <p id="notice"><%= notice %></p>
+    <% flash.each do |key, value| %>
+      <%= content_tag(:div, value, class: "#{key}") %>
+    <% end %>
     <ul>
-      <li id="tasks-index"><%= link_to t('.Tasks Index'), tasks_path %></li>
-      <li id="new-task"><%= link_to t('.New Task'), new_task_path %></li>
+      <% if logged_in? %>
+          <p id="notice"></p>
+          <li id="users-index"><%= link_to t('.Users Index'), admin_users_path %></li>
+          <li id="add-user"><%= link_to t('.Add User'), new_admin_user_path %></li>
+          <li id="tasks-index"><%= link_to t('.Tasks Index'), tasks_path %></li>
+          <li id="new-task"><%= link_to t('.New Task'), new_task_path %></li>
+          <li id="account-setting"><%= link_to t('.Profile'), user_path(current_user.id) %></li>
+          <li id="sign-out"><%= link_to t('.Logout'), session_path(current_user.id), method: :delete %></li>
+      <% else %>
+          <li id="sign-up"><%= link_to t('.Sign up'), new_user_path %></li>
+          <li id="sign-in"><%= link_to t('.Login'), new_session_path %></li>
+      <% end %>
     </ul>
+
     <%= yield %>
   </body>
 </html>

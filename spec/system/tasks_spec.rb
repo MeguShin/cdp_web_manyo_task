@@ -1,13 +1,29 @@
 require 'rails_helper'
 
 RSpec.describe 'タスク管理機能', type: :system do
+  # 一般ユーザーを作成
+  let!(:user) { FactoryBot.create(:user) }
+  # 管理ユーザーを作成
+  #let!(:admin_user) { FactoryBot.create(:admin_user) }
+  
+  before do
+    # ロングイン処理を行う
+    visit '/sessions/new'
+
+    # ラベルではなく、テキストフィールド側（session）のIDに合わせる
+    fill_in 'session_email', with: user.email
+    fill_in 'session_password', with: user.password
+
+    click_button 'ログイン'
+  end
+
   # Step2で作成
   describe '登録機能' do
     context 'タスクを登録した場合' do
       it '登録したタスクが表示される' do
         # テストで使用するためのタスクを登録
         # Task.create!(title: '書類作成', content: '企画書を作成する。')
-        FactoryBot.create(:task)
+        FactoryBot.create(:task, user: user)
         # タスク一覧画面に遷移
         visit tasks_path
         # visit（遷移）したpage（この場合、タスク一覧画面）に"書類作成"という文字列がhave_content（含まれていること）をexpect（確認・期待）する
@@ -20,14 +36,14 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe '一覧表示機能' do
     # Step2から作成
     # let!を使ってテストデータを変数として定義することで、複数のテストでテストデータを共有できる
-    let!(:first_task) { FactoryBot.create(:task, created_at: '2025-02-18')}
-    let!(:second_task) { FactoryBot.create(:task, created_at: '2025-02-17')}
-    let!(:third_task) { FactoryBot.create(:task, created_at: '2025-02-16')}
+    let!(:first_task) { FactoryBot.create(:task, created_at: '2025-02-18', user: user)}
+    let!(:second_task) { FactoryBot.create(:task, created_at: '2025-02-17', user: user)}
+    let!(:third_task) { FactoryBot.create(:task, created_at: '2025-02-16', user: user)}
     # Step3用
     # テストデータを複数作成する
-    let!(:first_task3) { FactoryBot.create(:task31, title: 'first_task') }
-    let!(:second_task3) { FactoryBot.create(:task32, title: "second_task") }
-    let!(:third_task3) { FactoryBot.create(:task33, title: "third_task") }
+    let!(:first_task3) { FactoryBot.create(:task31, title: 'first_task', user: user) }
+    let!(:second_task3) { FactoryBot.create(:task32, title: "second_task", user: user) }
+    let!(:third_task3) { FactoryBot.create(:task33, title: "third_task", user: user) }
     # beforeブロックを使用して、各テストケースが実行される前に共通の事前準備を行う
     before do
       # タスク一覧画面に遷移
@@ -47,7 +63,7 @@ RSpec.describe 'タスク管理機能', type: :system do
     context '新たにタスクを作成した場合' do
       it '新しいタスクが一番上に表示される' do
         # new_task変数に現在時刻(Time.now)の新しいタスクを格納
-        new_task = FactoryBot.create(:task, created_at: Time.now)
+        new_task = FactoryBot.create(:task, created_at: Time.now, user: user)
         # expectメソッドを使用して、@task_list変数に格納されたタスク一覧の行から、新しいタスクのタイトルが表示されていることを確認
         expect(@task_list[1]).to have_content(new_task.title)
       end
@@ -61,10 +77,10 @@ RSpec.describe 'タスク管理機能', type: :system do
           # "deadline_on"リンクをクリックしてソートする
           click_link Task.human_attribute_name(:deadline_on)
           # 最初のタスクのdeadline_onが古い順かどうかを確認する
-          # tr:nth-child(2)は2行目、td:nth-child(4)は4列目を指す=>deadline_onの値する位置
-          first_task_deadline = find('table tr:nth-child(2) td:nth-child(4)').text
-          second_task_deadline = find('table tr:nth-child(3) td:nth-child(4)').text
-          # 3行目のdeadline_onよりも2行目のdeadline_onの方が古い順であることを確認
+          # tr:nth-child(1)は1行目、td:nth-child(4)は4列目を指す=>deadline_onの値する位置
+          first_task_deadline = find('table tr:nth-child(1) td:nth-child(4)').text
+          second_task_deadline = find('table tr:nth-child(2) td:nth-child(4)').text
+          # 1行目のdeadline_onよりも2行目のdeadline_onの方が古い順であることを確認
           expect(first_task_deadline).to be <= second_task_deadline
         end
       end
@@ -152,7 +168,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         # テストで使用するためのタスクを登録
         # task = Task.create!(title: '詳細表示テスト', content: '詳細表示機能をテストするためのタスク')
         # task = FactoryBot.create(:task, title: '詳細表示テスト', content: '詳細表示機能をテストするためのタスク')
-        task = FactoryBot.create(:task3)
+        task = FactoryBot.create(:task3, user: user)
         # タスク詳細画面に遷移
         visit task_path(task)
         # タスクの詳細情報が画面上に表示されているかを確認

@@ -1,18 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe 'タスクモデル機能', type: :model do
-  # Step3用
+  # ユーザーを作成
+  let(:user) { FactoryBot.create(:user) }
+
   describe '検索機能' do
     # テストデータを複数作成する
-    let!(:first_task) { FactoryBot.create(:task31, title: 'first_task_title') }
-    let!(:second_task) { FactoryBot.create(:task32, title: "second_task_title") }
-    let!(:third_task) { FactoryBot.create(:task33, title: "third_task_title") }
-    # before do
-      # テストデータを作成
-      #@task1 = Task.create(title: 'first_task', content: 'first_task', deadline_on: '2025-02-18', priority: "中", status: "未着手")      # @task2 = Task.create(title: 'second_task', content: 'second_task', deadline_on: '2025-02-17', priority: "高", status: "着手中")
-      # @task3 = Task.create(title: 'third_task', content: 'third_task', deadline_on: '2025-02-16', priority: "低", status: "完了")
-    # end
-    
+    let!(:first_task) { FactoryBot.create(:task31, title: "first_task_title", user: user) }
+    let!(:second_task) { FactoryBot.create(:task32, title: "second_task_title", user: user) }
+    let!(:third_task) { FactoryBot.create(:task33, title: "third_task_title", user: user) }
+
     context 'scopeメソッドでタイトルのあいまい検索をした場合' do
       it "検索ワードを含むタスクが絞り込まれる" do
         # タイトルの検索メソッドをsearch_titleとしてscopeで定義
@@ -23,7 +20,6 @@ RSpec.describe 'タスクモデル機能', type: :model do
         expect(Task.search_title('first')).not_to include(second_task)
         expect(Task.search_title('first')).not_to include(third_task)
         expect(Task.search_title('first').count).to eq(1)
-        
         # タイトルに"first"を含むタスクを検索
         # result = Task.title_search('first')
         # 期待される結果を検証
@@ -78,7 +74,7 @@ RSpec.describe 'タスクモデル機能', type: :model do
 
     context 'タスクのタイトルと説明に値が入っている場合' do
       it 'タスクを登録できる' do
-        task = Task.create(title: '企画書作成', content: '企画書を作成する。', deadline_on: '2023-09-05', priority: "低", status: "未着手")
+        task = Task.create(title: '企画書作成', content: '企画書を作成する。', deadline_on: '2023-09-05', priority: '低', status: '未着手', user: user)
         expect(task).to be_valid
       end
     end
