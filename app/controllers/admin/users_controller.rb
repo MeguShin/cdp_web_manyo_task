@@ -4,7 +4,6 @@ class Admin::UsersController < ApplicationController
     def index
         # 全てのuser情報を@usersに入力
         @users = User.includes(:tasks).all
-        #raise
     end
 
     def new
