@@ -1,6 +1,7 @@
 class Task < ApplicationRecord
     # Taskモデルにuserとの関連付けを追加。ユーザーが作成したタスクを特定する。
     belongs_to :user
+    has_and_belongs_to_many :labels
     validates :title, :content, :deadline_on, :priority, :status, presence: true
 
     # Step3から追加

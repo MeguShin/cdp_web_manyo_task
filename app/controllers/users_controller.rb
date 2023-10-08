@@ -82,7 +82,7 @@ class UsersController < ApplicationController
             else
                 render :edit
             end
-            render :edit
+            #render :edit
         end
     end
 

@@ -1,0 +1,23 @@
+<div class="container mt-4">
+    <h1>ラベル一覧ページ</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>名前</th>
+                <th>タスク数</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <% @labels.each do |label| %>
+                <tr>
+                    <td><%= label.name %></td>
+                    <td><%= label.tasks.count %></td>
+                    <td class="edit-label"><%= link_to t('common.edit'), edit_label_path(label), class: 'btn btn-primary btn-sm' %></td>
+                    <td class="destroy-label"><%= link_to t('common.destroy'), label, method: :delete, data: { confirm: t('common.confirm_destroy') }, class: 'btn btn-danger btn-sm' %></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>

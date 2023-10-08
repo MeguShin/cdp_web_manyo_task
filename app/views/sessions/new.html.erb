@@ -1,14 +1,15 @@
-<h1><%= t('.Log in') %></h1>
-<%= form_with(scope: :session, url: sessions_path, local: true) do |f| %>
-  <p>
-    <%= t('.email') %><br>
-    <%= f.email_field :email %>
-  </p>
-  <p>
-    <%= t('.password') %><br>
-    <%= f.password_field :password %>
-  </p>
+<div class="container mt-4">
+  <h1><%= t('.Log in') %></h1>
+  <%= form_with(scope: :session, url: sessions_path, local: true) do |f| %>
+    <div class="form-group">
+      <%= t('.email') %><br>
+      <%= f.email_field :email, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= t('.password') %><br>
+      <%= f.password_field :password, class: 'form-control' %>
+    </div>
 
-  <%= f.submit "ログイン", id: "create-session" %>
-
-<% end %>
+    <%= f.submit "ログイン", id: "create-session", class: 'btn btn-primary btn-block' %>
+  <% end %>
+</div>

@@ -1,0 +1,27 @@
+<div class="container mt-4">
+  <h1>ラベル編集ページ</h1>
+
+  <%= form_with(model: @label, url: label_path(@label), method: :patch, local: true) do |form| %>
+      <% if @label.errors.any? %>
+        <div id="error_explanation" class="alert alert-danger">
+          <h2><%= pluralize(@label.errors.count, "error") %> prohibited this label from being saved:</h2>
+          <ul>
+            <% @label.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+    
+      <div class="form-group">
+        <%= form.label :name %><br>
+        <%= form.text_field :name, class: 'form-control'  %>
+      </div>
+    
+      <div class="form-group">
+        <%= form.submit "更新する", class: 'btn btn-primary'  %>
+      </div>
+      
+      <%= link_to t('common.back'), labels_path, id: "back", class: 'btn btn-secondary' %>
+  <% end %>
+</div>
