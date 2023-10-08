@@ -5,6 +5,12 @@ class TasksController < ApplicationController
     # ログインしているユーザーのタスクだけを表示する
     def index
       @tasks = current_user.tasks.filtered_tasks(params).page(params[:page]).per(10)
+      @labels = Label.all
+
+      if params[:label_ids].present?
+        label_ids = params[:label_ids].map(&:to_i)
+        @tasks = @tasks.joins(:labels).where(labels: { id: label_ids })
+      end
       #@tasks = Task.filtered_tasks(params).page(params[:page]).per(10)
       #以下内容は、「app/models/tasks.rb」に移動
       # case params[:order]
@@ -51,6 +57,8 @@ class TasksController < ApplicationController
     end
   
     def show
+      @task = Task.find(params[:id])
+      @labels = @task.labels
     end
   
     def edit
@@ -80,8 +88,9 @@ class TasksController < ApplicationController
         end
       end
   
+      # ラベルのパラメータを追記して許可を出す
       def task_params
-        params.require(:task).permit(:title, :content, :deadline_on, :priority, :status)
+        params.require(:task).permit(:title, :content, :deadline_on, :priority, :status, label_ids: [])
       end
 
       # ログインしていない状態でタスク画面にアクセスした場合、ログイン画面にリダイレクトする

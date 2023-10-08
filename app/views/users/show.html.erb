@@ -1,13 +1,20 @@
-<h1><%= t('.Show') %></h1>
+<div class="container mt-4">
+    <h1><%= t('.Show') %></h1>
 
-<p>
-    <strong><%= User.human_attribute_name(:name) %>:</strong>
-    <%= @user.name %>
-</p>
-<p>
-    <strong><%= User.human_attribute_name(:email) %>:</strong>
-    <%= @user.email %>
-</p>
+    <dl class="row">
+        <dt class="col-sm-3"><strong><%= User.human_attribute_name(:name) %>:</strong>
+        <dd class="col-sm-9"><%= @user.name %>
 
-<%= link_to "編集", edit_user_path(@user), id: "edit-user" %><br>
-<%= link_to "削除", user_path(@user), method: :delete, data: { confirm: t('common.confirm_destroy') } %></td>
+        <dt class="col-sm-3"><strong><%= User.human_attribute_name(:email) %>:</strong>
+        <dd class="col-sm-9"><%= @user.email %>
+    </dl>
+
+    <div class="row mt-3">
+        <div class="col-sm-6">
+            <%= link_to "編集", edit_user_path(@user), id: "edit-user", class: "btn btn-primary"  %><br>
+        </div>
+        <div class="col-sm-6">
+            <%= link_to "削除", user_path(@user), method: :delete, data: { confirm: t('common.confirm_destroy') }, class: "btn btn-danger"  %></td>
+        </div>
+    </div>
+</div>

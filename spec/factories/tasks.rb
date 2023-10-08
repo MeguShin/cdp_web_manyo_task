@@ -3,14 +3,14 @@ FactoryBot.define do
   factory :task31, class: Task do
     title { 'first_task' }
     content { 'first_task' }
-    deadline_on { '2025-02-18'}
+    deadline_on { '2025-04-18'}
     priority { '中' }
     status { '未着手' }
   end
   factory :task32, class: Task do
     title { 'second_task' }
     content { 'second_task' }
-    deadline_on { '2025-02-17'}
+    deadline_on { '2025-03-17'}
     priority { '高' }
     status { '着手中' }
   end
@@ -44,7 +44,7 @@ FactoryBot.define do
   factory :task3, class: Task do
     title { '詳細表示テスト'}
     content { '詳細表示機能をテストするためのタスク'}
-    deadline_on { '2026-02-18'}
+    deadline_on { '2027-02-18'}
     priority { '中' }
     status { '未着手' }
   end

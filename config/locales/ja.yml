@@ -16,6 +16,8 @@ ja:
         password: パスワード
         password_confirmation: パスワード（確認）
         admin: 管理者権限
+      label:
+        name: 名前
   errors:
     format: "%{attribute}%{message}"
     messages:
@@ -44,6 +46,8 @@ ja:
       Logout: ログアウト
       Sign up: アカウント登録
       Login: ログイン
+      Labels Index: ラベル一覧
+      New Label: ラベルを登録する
   sessions:
     new:
       Log in: ログインページ
@@ -77,4 +81,10 @@ ja:
     edit:
       Edit: アカウント編集ページ
       success: アカウントが更新されました
-
+  labels:
+    create:
+      created: ラベルを登録しました
+    update:
+      updated: ラベルを更新しました
+    destroy:
+      destroyed: ラベルを削除しました

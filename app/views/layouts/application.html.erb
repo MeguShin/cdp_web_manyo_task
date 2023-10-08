@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
   <head>
     <title>CdpWebManyoTask</title>
     <%= csrf_meta_tags %>
@@ -7,27 +7,44 @@
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   </head>
 
   <body>
     <% flash.each do |key, value| %>
       <%= content_tag(:div, value, class: "#{key}") %>
     <% end %>
-    <ul>
-      <% if logged_in? %>
-          <p id="notice"></p>
-          <li id="users-index"><%= link_to t('.Users Index'), admin_users_path %></li>
-          <li id="add-user"><%= link_to t('.Add User'), new_admin_user_path %></li>
-          <li id="tasks-index"><%= link_to t('.Tasks Index'), tasks_path %></li>
-          <li id="new-task"><%= link_to t('.New Task'), new_task_path %></li>
-          <li id="account-setting"><%= link_to t('.Profile'), user_path(current_user.id) %></li>
-          <li id="sign-out"><%= link_to t('.Logout'), session_path(current_user.id), method: :delete %></li>
-      <% else %>
-          <li id="sign-up"><%= link_to t('.Sign up'), new_user_path %></li>
-          <li id="sign-in"><%= link_to t('.Login'), new_session_path %></li>
-      <% end %>
-    </ul>
+
+    <!-- ナビゲーションバー -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="ml-auto">
+        <% if logged_in? %>
+          <ul class="navbar-nav">
+            <li class="nav-item" id="users-index"><%= link_to t('.Users Index'), admin_users_path, class: "nav-link" %></li>
+            <li class="nav-item" id="add-user"><%= link_to t('.Add User'), new_admin_user_path, class: "nav-link" %></li>
+            <li class="nav-item" id="tasks-index"><%= link_to t('.Tasks Index'), tasks_path, class: "nav-link" %></li>
+            <li class="nav-item" id="new-task"><%= link_to t('.New Task'), new_task_path, class: "nav-link" %></li>
+            <li class="nav-item" id="labels-index"><%= link_to t('.Labels Index'), labels_path, class: "nav-link" %></li>
+            <li class="nav-item" id="new-label"><%= link_to t('.New Label'), new_label_path, class: "nav-link" %></li>
+            <li class="nav-item" id="account-setting"><%= link_to t('.Profile'), user_path(current_user.id), class: "nav-link" %></li>
+            <li class="nav-item" id="sign-out"><%= link_to t('.Logout'), session_path(current_user.id), method: :delete, class: "nav-link" %></li>
+          </ul>
+        <% else %>
+          <ul class="navbar-nav">
+            <li class="nav-item" id="sign-up"><%= link_to t('.Sign up'), new_user_path, class: "nav-link" %></li>
+            <li class="nav-item" id="sign-in"><%= link_to t('.Login'), new_session_path, class: "nav-link" %></li>
+          </ul>
+        <% end %>
+      </div>
+    </nav>
 
     <%= yield %>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </body>
 </html>

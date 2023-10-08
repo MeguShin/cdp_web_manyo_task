@@ -177,4 +177,28 @@ RSpec.describe 'タスク管理機能', type: :system do
        end
      end
   end
+  # Step5で追加
+  describe '検索機能' do
+    context 'ラベルで検索をした場合' do
+      it "そのラベルの付いたタスクがすべて表示される" do
+        # toとnot_toのマッチャを使って表示されるものとされないものの両方を確認する
+        # ユーザに関連付けられたラベルを作成
+        label1 = FactoryBot.create(:label, name: 'ラベル名', user: user)
+        label2 = FactoryBot.create(:label, name: '別のラベル名', user:user)
+        # タスクにラベルを関連付け
+        task1 = FactoryBot.create(:task, title: 'task1', user:user)
+        task2 = FactoryBot.create(:task, title: 'task2', user:user)
+        task1.labels << label1
+        task2.labels << label2
+        #タスク一覧画面にアクセス
+        visit tasks_path
+        # ラベル名を選択して検索
+        select 'ラベル名', from: 'label_ids'
+        click_button '検索'
+        # 検索結果を確認
+        expect(page).to have_content task1.title
+        expect(page).not_to have_content task2.title
+      end
+    end
+  end
 end

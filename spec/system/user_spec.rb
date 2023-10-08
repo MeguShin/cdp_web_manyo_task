@@ -13,7 +13,7 @@ RSpec.describe 'ユーザ管理機能', type: :system do
     # ロングイン処理を行う
     visit '/sessions/new'
 
-    # ラベルではなく、テキストフィールド（ページのソースを表示で分かる）のIDに合わせる
+    # ラベルではなく、テキストフィールド（「ページのソースを表示」で確認）のIDに合わせる
     fill_in 'session_email', with: user.email
     fill_in 'session_password', with: user.password
 
